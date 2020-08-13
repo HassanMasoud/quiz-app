@@ -7,6 +7,10 @@ const answerButtonsElement = document.getElementById("answer-buttons");
 let shuffledQuestions, currentQuestionIndex;
 
 startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", () => {
+  currentQuestionIndex++;
+  setNextQuestion();
+});
 
 function startGame() {
   startButton.classList.add("hide");
@@ -51,6 +55,12 @@ function selectAnswer(e) {
   Array.from(answerButtonsElement.children).forEach((button) => {
     setStatusClass(button, button.dataset.correct);
   });
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove("hide");
+  } else {
+    startButton.innerText = "Restart";
+    startButton.classList.remove("hide");
+  }
 }
 
 function setStatusClass(element, correct) {
@@ -75,6 +85,15 @@ const questions = [
       { text: "Warriors", correct: false },
       { text: "Lakers", correct: false },
       { text: "Bucks", correct: false },
+    ],
+  },
+  {
+    question: "How many games does each team play in the regular season?",
+    answers: [
+      { text: "85", correct: false },
+      { text: "82", correct: true },
+      { text: "79", correct: false },
+      { text: "76", correct: false },
     ],
   },
 ];
