@@ -36,22 +36,45 @@ function showQuestion(question) {
 }
 
 function resetState() {
+  clearStatusClass(document.body);
   nextButton.classList.add("hide");
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild);
   }
 }
 
-function selectAnswer() {}
+function selectAnswer(e) {
+  const selectedButton = e.target;
+  console.log(selectedButton);
+  const correct = selectedButton.dataset.correct;
+  setStatusClass(document.body, correct);
+  Array.from(answerButtonsElement.children).forEach((button) => {
+    setStatusClass(button, button.dataset.correct);
+  });
+}
+
+function setStatusClass(element, correct) {
+  clearStatusClass(element);
+  if (correct) {
+    element.classList.add("correct");
+  } else {
+    element.classList.add("wrong");
+  }
+}
+
+function clearStatusClass(element) {
+  element.classList.remove("correct");
+  element.classList.remove("wrong");
+}
 
 const questions = [
   {
     question: "Who won the NBA finals in 2019?",
     answers: [
-      { text: "Raptors", correct: "true" },
-      { text: "Warriors", correct: "false" },
-      { text: "Lakers", correct: "false" },
-      { text: "Bucks", correct: "false" },
+      { text: "Raptors", correct: true },
+      { text: "Warriors", correct: false },
+      { text: "Lakers", correct: false },
+      { text: "Bucks", correct: false },
     ],
   },
 ];
